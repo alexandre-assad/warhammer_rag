@@ -1,0 +1,10 @@
+[project]
+name = "school-rag-lab-1"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "docling>=2.128.0",
+    "langchain>=1.4.1",
+]
