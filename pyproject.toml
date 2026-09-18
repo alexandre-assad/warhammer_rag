@@ -8,3 +8,10 @@ dependencies = [
     "docling>=2.128.0",
     "langchain>=1.4.1",
 ]
+
+[dependency-groups]
+dev = [
+    "black>=26.5.1",
+    "pytest>=9.1.1",
+    "ruff>=0.16.8",
+]
