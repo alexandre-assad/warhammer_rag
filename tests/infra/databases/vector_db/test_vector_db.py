@@ -29,4 +29,6 @@ def test_add_chunks():
 def test_query():
     for query, doc in zip(MOCK_QUERIES,MOCK_CHUNKS):
         assert store.search(query,k=1,source="test_chunks")[0]["text"] == doc
-        
+
+def mock_test():
+    assert True
