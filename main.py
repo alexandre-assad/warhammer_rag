@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from domain.parsers.pdf_parser import pdf_processing
+from domain.text_processing.chunking import chunk_markdown
 
 
 def main():
@@ -8,7 +9,4 @@ def main():
 
 
 if __name__ == "__main__":
-    text = pdf_processing(
-        Path("data/raw/pdf/Core Rules.pdf"), Path("data/processed/pdf/Core Rules.md")
-    )
-    print(text)
+    chunks = chunk_markdown(Path("data/processed/pdf/Core Rules.md"))
