@@ -58,7 +58,7 @@ class VectorStore:
         chunks = get_chunks_from_text(text)
         return self.add_chunks(chunks, source=Path(file_path).name)
 
-    def search(self, query: str, k: int = 5, source: str | None = None) -> list[dict]:
+    def search(self, query: str, k: int = 20, source: str | None = None) -> list[dict]:
         result = self.collection.query(
             query_texts=[query],
             n_results=k,

@@ -10,7 +10,7 @@ class Reranker:
             self,
             query: str,
             chunks:list[dict],
-            top_k:int
+            top_k:int =5
     )-> list[dict]: 
         if len(chunks) == 0:
             return []
