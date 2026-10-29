@@ -1,3 +1,7 @@
 .env
 uv.lock
 *.pyc
+.vscode
+.venv
+*.lock 
+data/processed/vector_db/
