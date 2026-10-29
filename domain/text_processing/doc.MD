@@ -1,0 +1,5 @@
+Pour la partie Chunking, il y avait plusieurs approches possibles.
+Etant donné qu'on a choisi de convertir notre PDF en Markdown, cela simplifie les décisions afin de réaliser notre chunk.
+
+Nous avons choisi de séparé par partie, séparées par "##", avec un système de backtracking en cas de taille supérieur à notre MAX_CHUNK_SIZE (500).
+Le backtracking établi une liste de séparateur du plus gros au plus court ```separators = ['\n\n','\n','. ', '? ', '! ', '; ']``` et nous essayons en backtracking de prendre le séparateur le plus gros avec la plus grosse part possible. Nous savons que cette approche peut crée  des situations étranges, comme avoir une simple phrase dans un chunk, mais nous avons décidé que la rareté de cette situation + son impact négatif négligeable justifiaient cette approche. En effet, en général dans des sous parties il y a plusieurs paragrapes courts, donc nous avons en général au moins un paragraph par chunk. Nous conservons ainsi au globale un meilleur contexte dans nos chunks. 

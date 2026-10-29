@@ -1,5 +1,3 @@
-# TODO maybe test from unstructured.partition.auto import partition
-
 from pathlib import Path
 
 from docling.document_converter import DocumentConverter

@@ -5,8 +5,12 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13,<4.0.0"
 dependencies = [
+    "certifi>=2026.7.22",
+    "cryptography>=50.0.2",
     "docling>=2.128.0",
     "langchain>=1.4.1",
+    "onnxruntime>=1.31.1",
+    "pyopenssl>=26.4.0",
     "chromadb>=1.5.9",
     "sentence_transformers>=6.2.0"
 ]
