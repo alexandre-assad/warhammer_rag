@@ -5,7 +5,7 @@ from chromadb.utils import embedding_functions
 from domain.text_processing.chunking import get_chunks_from_text, mardown_file_read
 
 DB_PATH = "data/processed/vector_db"  # folder where Chroma persists its data
-COLLECTION_NAME = "rules"
+COLLECTION_NAME = "WARHAMMER_RULES"
 MD_FILE = "data/processed/pdf/Core Rules.md"
 MODEL_NAME = "intfloat/multilingual-e5-small"
 
