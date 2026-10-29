@@ -1,7 +1,6 @@
 from pathlib import Path
 
-from domain.parsers.pdf_parser import pdf_processing
-from domain.text_processing.chunking import chunk_markdown
+from infra.databases.database import execute_select
 
 
 def main():
@@ -9,4 +8,4 @@ def main():
 
 
 if __name__ == "__main__":
-    chunks = chunk_markdown(Path("data/processed/pdf/Core Rules.md"))
+    print(execute_select('select * from abilities'))
