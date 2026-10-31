@@ -7,7 +7,8 @@ from domain.text_processing.chunking import get_chunks_from_text, mardown_file_r
 DB_PATH = "data/processed/vector_db"  # folder where Chroma persists its data
 COLLECTION_NAME = "WARHAMMER_RULES"
 MD_FILE = "data/processed/pdf/Core Rules.md"
-MODEL_NAME = "intfloat/multilingual-e5-small"
+# MODEL_NAME = "intfloat/multilingual-e5-small"
+MODEL_NAME = "./model_e5_local"
 
 
 class VectorStore:
@@ -53,9 +54,9 @@ class VectorStore:
             )
         return len(chunks)
 
-    def index_markdown(self, file_path: Path) -> int:
+    def index_markdown(self, chunk_size:int = 500, file_path: Path = Path(MD_FILE)) -> int:
         text = mardown_file_read(file_path)
-        chunks = get_chunks_from_text(text)
+        chunks = get_chunks_from_text(text, chunk_size)
         return self.add_chunks(chunks, source=Path(file_path).name)
 
     def search(self, query: str, k: int = 5, source: str | None = None) -> list[dict]:
@@ -67,9 +68,9 @@ class VectorStore:
         return [
             {"text": doc, "distance": dist, **meta}
             for doc, dist, meta in zip(
-                result["documents"][0],
-                result["distances"][0],
-                result["metadatas"][0],
+                result.get("documents", [None])[0],
+                result.get("distances", [None])[0],
+                result.get("metadatas", [None])[0],
             )
         ]
 
@@ -84,6 +85,6 @@ if __name__ == "__main__":
         Path(DB_PATH).mkdir()
 
     store = VectorStore()
-    n = store.index_markdown(Path(MD_FILE))
+    n = store.index_markdown()
     print("okay")
     print(f"Indexed {n} chunks, collection size: {store.count()}")

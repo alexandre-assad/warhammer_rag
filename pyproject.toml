@@ -3,16 +3,17 @@ name = "school-rag-lab-1"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13,<4.0.0"
+requires-python = ">=3.12"
 dependencies = [
-    "certifi>=2026.7.22",
+    "certifi>=2026.10.22",
     "chromadb>=1.5.9",
     "cryptography>=50.0.2",
     "docling>=2.128.0",
+    "huggingface-hub<0.24.0",
     "langchain>=1.4.1",
     "onnxruntime>=1.31.1",
     "pyopenssl>=26.4.0",
-    "sentence_transformers>=6.2.0",
+    "sentence-transformers>=5.7.0",
 ]
 
 [dependency-groups]
