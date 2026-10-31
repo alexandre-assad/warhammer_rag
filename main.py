@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from infra.databases.database import execute_select
+from evaluation.ragas.retrieval_params import retrieval_params_evaluation
 
 
 def main():
@@ -8,4 +8,4 @@ def main():
 
 
 if __name__ == "__main__":
-    print(execute_select('select * from abilities'))
+    retrieval_params_evaluation()

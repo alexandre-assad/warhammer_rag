@@ -1,0 +1,5 @@
+Pour évaluer notre retrieval ainsi que le reranker, on a décidé de réaliser un RAGAS.
+Le principe étant simple, on demande à un LLM (plus puissant, Claude Sonnet 5.5) de réaliser un jeu de tests sur notre document à récupérer, ici nos règles, qui contiendra 3 types de questions. Il y a ensuite un human-review / cleaning des questions vagues, puis le test_set est gelé afin d'y évaluer nos modèles.
+Après, on réalise une évaluation avec le Hitrate, Recall, MRR et MAP sur les chunks retrouvés.
+On réalise cette opérations avec différents k et max_chunk_size afin d'optimiser ces hyperparamètres et on stock nos résultats dans un csv.
+Après analyse de ces résultats, les meilleures à choisir sont donc MAX_CHUNK_SIZE = 1000 et pour k ça dépend : k=5 offre de meilleurs résultats que k=3 mais légers (recall de 0.985 à 0.995) mais donnera plus de contexte pour nos requêtes API et donc plus de coût. Ce sera donc un choix économique et architectural plus que technique.

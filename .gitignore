@@ -5,3 +5,8 @@ uv.lock
 .venv
 *.lock 
 data/processed/vector_db/
+
+model_e5_local/
+model_minilm_l6/
+
+chroma.sqlite3
