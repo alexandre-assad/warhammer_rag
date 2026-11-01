@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 import sqlite3
 
+from domain.agent.rate_limiter import call_with_retry
 from infra.databases.database import execute_select
 
 load_dotenv()
@@ -25,7 +26,7 @@ Translate this human query into a SQL Query : "{query}"
 Return ONLY the SQL Query. No further explanation, no markdown span ```sql."""
 
         model = genai.GenerativeModel(model_name="gemini-3.5-flash")
-        response = model.generate_content(sql_prompt)
+        response = call_with_retry(model.generate_content, sql_prompt)
         
         sql_query = response.text.strip().replace("```sql", "").replace("```", "").strip()
         print(f"Requête SQL générée : {sql_query}")
