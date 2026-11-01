@@ -7,7 +7,8 @@ from domain.text_processing.chunking import get_chunks_from_text, mardown_file_r
 DB_PATH = "data/processed/vector_db"  # folder where Chroma persists its data
 COLLECTION_NAME = "WARHAMMER_RULES"
 MD_FILE = "data/processed/pdf/Core Rules.md"
-MODEL_NAME = "intfloat/multilingual-e5-small"
+# MODEL_NAME = "intfloat/multilingual-e5-small"
+MODEL_NAME = "./model_e5_local"
 
 
 class VectorStore:
@@ -58,7 +59,7 @@ class VectorStore:
         chunks = get_chunks_from_text(text)
         return self.add_chunks(chunks, source=Path(file_path).name)
 
-    def search(self, query: str, k: int = 5, source: str | None = None) -> list[dict]:
+    def search(self, query: str, k: int = 20, source: str | None = None) -> list[dict]:
         result = self.collection.query(
             query_texts=[query],
             n_results=k,
