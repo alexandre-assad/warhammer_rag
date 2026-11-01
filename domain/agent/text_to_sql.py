@@ -23,6 +23,7 @@ Here's the schema of my database :
 {schema}
 
 Translate this human query into a SQL Query : "{query}"
+Do not hesitate in the query to add relevant columns to a better understanding.
 Return ONLY the SQL Query. No further explanation, no markdown span ```sql."""
 
         model = genai.GenerativeModel(model_name="gemini-3.5-flash")

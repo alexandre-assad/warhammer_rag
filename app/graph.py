@@ -94,7 +94,6 @@ def generation(input: AgentState):
     
     chunks = input.get("chunks", [])
     sql_rows = input.get("sql_rows", [])
-    print(sql_rows)
     
     context_text = "\n\n".join([c.get("text", "") for c in chunks])
     
