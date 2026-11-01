@@ -24,12 +24,18 @@ Our RAG graph is done via Langgraph which implements execution graphs which prop
 The LLM which is used for the conversation is gemini-3.5-flash. It is relatively lightweight.
 
 ## Running the app 
+Important: install uv (pip install make) and make. 
+Run:  make app 
+Test: make tests 
 ## Test Results 
 ### Dataset generation 
 For details on how the datasets were generated see [eval_dataset_doc](evaluation/ragas/retrieval_evaluation.md)
 ### Retrieval 
 Overall our retrieval tests were very satisfactory. We tested with various sets of chunk_sizes and top_ks (size of the chunks and number of retrieved chunks). We found that unsurprisingly the most impactful setting is the number of retrieved chunks, moreover we see that past a cetrain value (5 in our case) recall stops improving. (the low impact of chunk size maybe due to the fact that the questions tested require a low amount of information, <300 tokens so having a longer texter doesn't really affect the performance)
 ### RAGAS 
+In order to test the performances of our entire pipeline, we used RAGAS which allows to use an llm to evaluate the answer of another llm to a query. We tested for 4 metrics. Here are the results.
+ ![RAGAS results](/evaluation/full_pipeline_ragas/results.jpeg)
+ > Note: We started the RAGAS with gemini but ran out of credits midway, in order to finish the run we used Claude sonnet 5.5.
 ### Miscellaneous
 During ou testing we tested with this question Q1:"What is the toughness of a space marine ?". This question obviously needs a sql query and no rules. Here is our result:
 ![RAG response to Q1](/evaluation/full_pipeline_ragas/space_marine.jpeg)
