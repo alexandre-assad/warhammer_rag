@@ -1,4 +1,17 @@
 # The Warhammer Expert tool 
+## Repo Organization 
+/app : python modules that implement the overall application (RAG graph and UI)
+
+/data: Where we store the data related to the Rules pdf
+
+/database: SQL database of the units 
+
+/domain: python modules for the steps in the RAG pipeline.
+
+/evaluation: Evaluation scripts, results and datasets.
+
+/infra: python modules to manage files (vector and sql databases and mock pdfs).
+
 ## Overview 
 This app allows the user to converse with a LLM and to ask precise questions about Warhammer, about its rules or specific information related to the units and overall gameplay. It uses a RAG pipeline to add parts of documents to the context of a LLM query.
 ## The Pipeline 
@@ -15,7 +28,7 @@ In order to store then retrieve the chunks, we use a vector database. We chose t
 ### Reranker 
 The reranker allows to thin our selected chunks pools by applying a more compute heavy model to compare the query and the retrieved chunks. For more details [reranker_doc](domain/reranker/reranker_doc.md).
 ### Text to SQL 
-In order to retrieve information from the database, we simply call a LLM (gemini-3.5-flash) to construct a relevant sql query based on the user input. The LLM has access at the database structure through its dictionnary added to the system prompt. Finally we also use few fixed examples for the few shot sql, this has good performances. But we could have also implemented dynamic example retrieval, where the examples used in the prompt are actually selected based on the prompt of the user rather then being fixed. 
+In order to retrieve information from the database, we simply call a LLM (gemini-3.5-flash) to construct a relevant sql query based on the user input. The LLM has access at the database structure through its dictionnary added to the system prompt. We also  could have implemented dynamic example retrieval, where some exampls of query/sql_query could have been added to the prompt based on a semantical search of the query. 
 >Note: The database is read only
 ### Execution Graph 
 Our RAG graph is done via Langgraph which implements execution graphs which propagates states. One go through the graph is a single round of conversation between the user and the llm (user query and llm answer). So in order to keep the conversationnal nature of the interaction, we use a checkpointer associated with tread id, this allows to keep the conversation history for further user prompts. For now, the system always retrieves something and does it based only on the last message in the conversation this brings two issues: 
@@ -24,9 +37,14 @@ Our RAG graph is done via Langgraph which implements execution graphs which prop
 The LLM which is used for the conversation is gemini-3.5-flash. It is relatively lightweight.
 
 ## Running the app 
-Important: install uv (pip install make) and make. 
-Run:  make app 
-Test: make tests 
+Important: install uv (```pip install uv```) and make. 
+Also set your google api key in the .env file ```GOOGLE_API_KEY = ```
+
+Run:  ```make app ```
+
+
+Run test suite: ```make tests ```
+
 ## Test Results 
 ### Dataset generation 
 For details on how the datasets were generated see [eval_dataset_doc](evaluation/ragas/retrieval_evaluation.md)
@@ -36,6 +54,9 @@ Overall our retrieval tests were very satisfactory. We tested with various sets 
 In order to test the performances of our entire pipeline, we used RAGAS which allows to use an llm to evaluate the answer of another llm to a query. We tested for 4 metrics. Here are the results.
  ![RAGAS results](/evaluation/full_pipeline_ragas/results.jpeg)
  > Note: We started the RAGAS with gemini but ran out of credits midway, in order to finish the run we used Claude sonnet 5.5.
+
+
+Our good results and the relative small scope of our project guided us towards simple and effective solutions. The more complex ones were though of but not implemented.
 ### Miscellaneous
 During ou testing we tested with this question Q1:"What is the toughness of a space marine ?". This question obviously needs a sql query and no rules. Here is our result:
 ![RAG response to Q1](/evaluation/full_pipeline_ragas/space_marine.jpeg)
