@@ -77,14 +77,3 @@ class VectorStore:
     def count(self) -> int:
         return self.collection.count()
 
-
-if __name__ == "__main__":
-    
-    if not Path(DB_PATH).exists():
-        print("Creating the vector_db folder")
-        Path(DB_PATH).mkdir()
-
-    store = VectorStore()
-    n = store.index_markdown()
-    print("okay")
-    print(f"Indexed {n} chunks, collection size: {store.count()}")
