@@ -1,11 +1,9 @@
-from pathlib import Path
+from app.ui import launch_app
 
-from infra.databases.database import execute_select
 
 
 def main():
-    print("Hello from school-rag-lab-1!")
-
+    pass
 
 if __name__ == "__main__":
-    print(execute_select('select * from abilities'))
+    launch_app()
