@@ -1,12 +1,13 @@
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
 from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import InMemorySaver
 
 from domain.agent.text_to_sql import generate_sql
 from domain.reranker.reranker import Reranker
-from infra.databases.vector_database import VectorStore
+from infra.databases.vector_database import VectorStore, DB_PATH
 from typing import TypedDict, Annotated
 
 import google.generativeai as genai
@@ -35,8 +36,16 @@ RULES_RETRIEVAL_NODE = "rules_retrieval"
 T2SQL_RETRIEVAL_NODE = "sql_retrieval"
 RERANK_NODE = "rerank"
 GENERATION_NODE = "generation"
+
+if not Path(DB_PATH).exists():
+                Path(DB_PATH).mkdir()
+
 store = VectorStore()
 reranker = Reranker()
+
+if store.count() == 0:
+     n = store.index_markdown()
+     print(f"Indexed {n} chunks, collection size: {store.count()}")
 
 
 
