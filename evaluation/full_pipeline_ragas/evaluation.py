@@ -1,4 +1,5 @@
 import uuid
+import os
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -7,11 +8,10 @@ import pandas as pd
 from app.graph import get_app
 
 from ragas import EvaluationDataset, SingleTurnSample, evaluate
-from ragas.llms import LangchainLLMWrapper
+from ragas.llms import llm_factory
 from ragas.metrics import (
     FactualCorrectness,
     Faithfulness,
-    LLMContextPrecisionWithoutReference,
     LLMContextPrecisionWithReference,
     LLMContextRecall,
 )
@@ -19,11 +19,12 @@ from ragas.metrics import (
 import google.generativeai as genai
 
 load_dotenv()
+genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
 
 test_set = pd.read_csv("evaluation/data/processed/testset_v1.csv")
 OUTPUT_FILE = Path("evaluation/results/full_pipeline_eval_results.csv")
 
-# Keys of the final state returned by app.invoke(...). Adapt to your graph.
+# Keys of the final state returned by app.invoke(...).
 ANSWER_KEY = "answer"
 DOCUMENTS_KEY = "chunks"  
 SQL_KEY = "sql_rows"  
@@ -33,7 +34,8 @@ SQL_KEY = "sql_rows"
 
 
 def build_judge_llm():
-    raise NotImplementedError("return a LangchainLLMWrapper(chat_model) here")
+    llm = llm_factory("gemini-2.0-flash",provider="google")
+    raise llm
 
 
 def run_rag(app, question: str) -> tuple[str, list[str]]:
