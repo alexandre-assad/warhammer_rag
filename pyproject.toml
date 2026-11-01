@@ -3,7 +3,7 @@ name = "school-rag-lab-1"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 dependencies = [
     "certifi>=2026.10.22",
     "chromadb>=1.5.9",
@@ -13,7 +13,12 @@ dependencies = [
     "langchain>=1.4.1",
     "onnxruntime>=1.31.1",
     "pyopenssl>=26.4.0",
+    "langgraph>=1.2.18",
+    "huggingface-hub<0.24.0",
     "sentence-transformers>=5.7.0",
+    "google-generativeai>=0.8.6",
+    "python-dotenv>=1.2.3",
+    "streamlit>=1.66.1",
 ]
 
 [dependency-groups]

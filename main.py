@@ -1,11 +1,9 @@
-from pathlib import Path
+from app.ui import launch_app
 
-from evaluation.ragas.retrieval_params import retrieval_params_evaluation
 
 
 def main():
-    print("Hello from school-rag-lab-1!")
-
+    pass
 
 if __name__ == "__main__":
-    retrieval_params_evaluation()
+    launch_app()
