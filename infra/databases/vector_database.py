@@ -7,8 +7,8 @@ from domain.text_processing.chunking import get_chunks_from_text, mardown_file_r
 DB_PATH = "data/processed/vector_db"  # folder where Chroma persists its data
 COLLECTION_NAME = "WARHAMMER_RULES"
 MD_FILE = "data/processed/pdf/Core Rules.md"
-# MODEL_NAME = "intfloat/multilingual-e5-small"
-MODEL_NAME = "./model_e5_local"
+MODEL_NAME = "intfloat/multilingual-e5-small"
+# MODEL_NAME = "./model_e5_local"
 
 
 class VectorStore:
