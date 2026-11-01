@@ -1,5 +1,7 @@
 import streamlit as st
+
 from app.graph import app, config
+
 
 def launch_app():
     st.title("Warhammer Assistant")
@@ -21,12 +23,14 @@ def launch_app():
                 try:
                     inputs = {
                         "query": prompt,
-                        "messages": [{"role": "user", "content": prompt}]
+                        "messages": [{"role": "user", "content": prompt}],
                     }
                     result = app.invoke(inputs, config=config)
                     answer = result["answer"]
 
                     st.markdown(answer)
-                    st.session_state.messages.append({"role": "assistant", "content": answer})
+                    st.session_state.messages.append(
+                        {"role": "assistant", "content": answer}
+                    )
                 except Exception as e:
-                    st.error(f"Erreur d'exécution : {str(e)}")
+                    st.error(f"Erreur d'exécution : {e!s}")

@@ -1,7 +1,8 @@
 from pathlib import Path
-import sys
+
 import chromadb
 from chromadb.utils import embedding_functions
+
 from domain.text_processing.chunking import get_chunks_from_text, mardown_file_read
 
 DB_PATH = "data/processed/vector_db"  # folder where Chroma persists its data
@@ -54,7 +55,9 @@ class VectorStore:
             )
         return len(chunks)
 
-    def index_markdown(self, chunk_size:int = 500, file_path: Path = Path(MD_FILE)) -> int:
+    def index_markdown(
+        self, chunk_size: int = 500, file_path: Path = Path(MD_FILE)
+    ) -> int:
         text = mardown_file_read(file_path)
         chunks = get_chunks_from_text(text, chunk_size)
         return self.add_chunks(chunks, source=Path(file_path).name)
@@ -76,4 +79,3 @@ class VectorStore:
 
     def count(self) -> int:
         return self.collection.count()
-
