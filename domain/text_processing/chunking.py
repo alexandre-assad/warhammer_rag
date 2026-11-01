@@ -3,30 +3,35 @@ from pathlib import Path
 MAX_CHUNK_SIZE = 500
 
 
-def mardown_file_read(file_path: Path) -> str: 
-    with open(file_path, 'r', encoding="utf-8") as f:
+def mardown_file_read(file_path: Path) -> str:
+    with open(file_path, "r", encoding="utf-8") as f:
         return f.read()
 
 
-def get_paragraphs_from_text(text: str) -> list[str]: 
-    return text.split('##')
+def get_paragraphs_from_text(text: str) -> list[str]:
+    return text.split("##")
 
 
-def reduce_paragraph(paragraph: str, chunk_size:int = 500, min_size: int = 20) -> list[str]: 
+def reduce_paragraph(
+    paragraph: str, chunk_size: int = 500, min_size: int = 20
+) -> list[str]:
     window = paragraph[:MAX_CHUNK_SIZE]
 
-    separators = ['\n\n','\n','. ', '? ', '! ', '; ']
+    separators = ["\n\n", "\n", ". ", "? ", "! ", "; "]
     for separator in separators:
         idx = window.rfind(separator)
         if idx > min_size:
-            reduced_paragraph = paragraph[:idx + len(separator)]
-            if len(paragraph[idx + len(separator):]) > MAX_CHUNK_SIZE:
-                others_paragraphs = reduce_paragraph(paragraph[idx + len(separator):], chunk_size)
+            reduced_paragraph = paragraph[: idx + len(separator)]
+            if len(paragraph[idx + len(separator) :]) > MAX_CHUNK_SIZE:
+                others_paragraphs = reduce_paragraph(
+                    paragraph[idx + len(separator) :], chunk_size
+                )
             else:
-                others_paragraphs = [paragraph[idx + len(separator):]]
+                others_paragraphs = [paragraph[idx + len(separator) :]]
             return [reduced_paragraph] + others_paragraphs
-        
+
     return [paragraph[:MAX_CHUNK_SIZE], paragraph[MAX_CHUNK_SIZE:]]
+
 
 def get_chunks_from_text(text: str, chunk_size: int = 500) -> list[str]:
     final_paragraphs = []

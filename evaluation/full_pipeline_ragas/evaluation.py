@@ -7,7 +7,6 @@ from pathlib import Path
 import pandas as pd
 from dotenv import load_dotenv
 from google import genai
-
 from ragas import EvaluationDataset, RunConfig, SingleTurnSample, evaluate
 from ragas.llms import llm_factory
 from ragas.metrics import (
@@ -41,7 +40,10 @@ def run_rag(app, question: str) -> tuple[str, list[str]]:
         {"query": question, "messages": [{"role": "user", "content": question}]},
         config,
     )
-    contexts = [c["text"] if isinstance(c, dict) else str(c) for c in state.get(DOCUMENTS_KEY, [])]
+    contexts = [
+        c["text"] if isinstance(c, dict) else str(c)
+        for c in state.get(DOCUMENTS_KEY, [])
+    ]
     if state.get(SQL_KEY):
         contexts.append(str(state[SQL_KEY]))
     return state[ANSWER_KEY], contexts
@@ -75,7 +77,7 @@ def collect_runs(app, test_set: pd.DataFrame) -> list[dict]:
 
 def full_evaluation() -> None:
     test_set = pd.read_csv(TESTSET).dropna(subset=["question"])
-    test_set.drop(columns=['decision','comment'], inplace=True)
+    test_set.drop(columns=["decision", "comment"], inplace=True)
 
     if N_ROWS:
         test_set = test_set.sample(N_ROWS, random_state=0)

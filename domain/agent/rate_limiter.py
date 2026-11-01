@@ -20,7 +20,8 @@ class RateLimiter:
             time.sleep(slot - now)
 
 
-limiter = RateLimiter(4)  
+limiter = RateLimiter(4)
+
 
 def call_with_retry(fn, *args, retries: int = 5, **kwargs):
     for attempt in range(retries):
